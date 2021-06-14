@@ -3,6 +3,8 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
+import java.lang.Integer.min
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.sqrt
 
@@ -119,7 +121,16 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = TODO()
+): Int {
+    var fight = 0
+    when {
+        (kingX != rookX1 && kingY != rookY1) && (kingX != rookX2 && kingY != rookY2) -> fight = 0
+        (kingX == rookX1 || kingY == rookY1) && (kingX != rookX2 && kingY != rookY2) -> fight = 1
+        (kingX != rookX1 && kingY != rookY1) && (kingX == rookX2 || kingY == rookY2) -> fight = 2
+        (kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2) -> fight = 3
+    }
+    return fight
+}
 
 /**
  * Простая
@@ -135,7 +146,16 @@ fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
-): Int = TODO()
+): Int {
+
+    return when {
+        (kingX == rookX || kingY == rookY) && (abs(bishopX - kingX) != abs(bishopY - kingY)) -> 1
+        (kingX != rookX && kingY != rookY) && (abs(bishopX - kingX) == abs(bishopY - kingY)) -> 2
+        (kingX == rookX || kingY == rookY) && (abs(bishopX - kingX) == abs(bishopY - kingY)) -> 3
+        else -> 0
+    }
+
+}
 
 /**
  * Простая
@@ -145,7 +165,66 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+/**
+ * Простая
+ *
+ * Треугольник задан длинами своих сторон a, b, c.
+ * Проверить, является ли данный треугольник остроугольным (вернуть 0),
+ * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
+ * Если такой треугольник не существует, вернуть -1.
+ */
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    var maxD = 0.0
+    var secD = 0.0
+    var thrD = 0.0
+
+    when {
+        a >= b && a >= c -> {
+            maxD = a
+            if (b > c) {
+                secD = b
+                thrD = c
+            } else {
+                secD = c
+                thrD = b
+            }
+        }
+        b >= a && b >= c -> {
+            maxD = b
+            if (a > c) {
+                secD = a
+                thrD = c
+            } else {
+                secD = c
+                thrD = a
+            }
+        }
+        c >= a && c >= b -> {
+            maxD = c
+            if (a > b) {
+                secD = a
+                thrD = b
+            } else {
+                secD = b
+                thrD = a
+            }
+        }
+    }
+
+    val oxygen = (maxD * maxD) < ((secD * secD) + (thrD * thrD))
+    val rightTriangle = (maxD * maxD) == ((secD * secD) + (thrD * thrD))
+    val obtuseTriangle = (maxD * maxD) > ((secD * secD) + (thrD * thrD))
+
+
+    return if ((maxD < secD + thrD) && (maxD > secD - thrD)) {
+        when {
+            oxygen -> 0
+            rightTriangle -> 1
+            obtuseTriangle -> 2
+            else -> 999
+        }
+    } else -1
+}
 
 /**
  * Средняя
@@ -155,4 +234,19 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+/**
+ * Средняя
+ *
+ * Даны четыре точки на одной прямой: A, B, C и D.
+ * Координаты точек a, b, c, d соответственно, b >= a, d >= c.
+ * Найти длину пересечения отрезков AB и CD.
+ * Если пересечения нет, вернуть -1.
+ */
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    return if (a <= b && c <= d && b >= c && a < d) {
+        abs(max(a, c) - min(b, d))
+    } else -1
+}
+
+
+
