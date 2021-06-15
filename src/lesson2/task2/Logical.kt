@@ -3,7 +3,6 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
-import java.lang.Math.pow
 import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
