@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import kotlin.math.abs
 import kotlin.math.sqrt
 
 /**
@@ -67,8 +68,16 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
+
+
 fun digitNumber(n: Int): Int {
-    
+    var numb = n
+    var count = if (numb == 0) 1 else 0
+    while (numb != 0) {
+        count++
+        numb /= 10
+    }
+    return count
 }
 
 /**
@@ -77,9 +86,18 @@ fun digitNumber(n: Int): Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int =
-    if (n <= 2) 1
-    else fib(n - 2) + fib(n - 1)
+fun fib(n: Int): Int {
+    var fib1 = 1
+    var fib2 = 1
+    var i = 0
+    while (i < n - 2) {
+        val fibSum = fib1 + fib2
+        fib1 = fib2
+        fib2 = fibSum
+        i += 1
+    }
+    return fib2
+}
 
 
 /**
@@ -88,21 +106,48 @@ fun fib(n: Int): Int =
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    fun nod(m: Int, n: Int): Int {
+        var fNumb = m
+        var sNumb = n
+        while (fNumb != sNumb) {
+            if (fNumb > sNumb) {
+                fNumb -= sNumb
+            } else {
+                sNumb -= fNumb
+            }
+        }
+        return fNumb
+    }
+    return abs(m * n) / nod(m, n)
+}
+
 
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    var divisor = 2
+    while (n % divisor != 0) {
+        divisor++
+    }
+    return divisor
+}
 
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    var divisor = n - 1
+    while (n % divisor != 0) {
+        divisor--
+    }
+    return divisor
+}
 
 /**
  * Простая
@@ -138,7 +183,20 @@ fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var numb = x
+    var count = 0
+    while (numb != 1) {
+        if (numb % 2 == 0) {
+            numb /= 2
+            count++
+        } else {
+            numb = 3 * numb + 1
+            count++
+        }
+    }
+    return count
+}
 
 /**
  * Средняя
