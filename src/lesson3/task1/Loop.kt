@@ -3,6 +3,7 @@
 package lesson3.task1
 
 import kotlin.math.abs
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 /**
@@ -163,7 +164,6 @@ fun isCoPrime(m: Int, n: Int): Boolean {
         m <= n -> m
         else -> n
     }
-    //print("M = $m, N = $n")
     while (divisor > 0) {
         if (m % divisor != 0 || n % divisor != 0) {
             divisor--
@@ -236,7 +236,33 @@ fun collatzSteps(x: Int): Int {
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    var numb = 1
+    var sin = x
+    var calc = false
+
+    while (abs(sin) > abs(eps)) {
+        numb += 2
+        when {
+            abs(sin) < abs(eps) -> {
+                return sin
+            }
+            calc -> {
+                sin += x.pow(numb) / factorial(numb)
+                println("Прибавили ${x.pow(numb) / factorial(numb)}")
+                println("Sin = $sin")
+                calc = false
+            }
+            else -> {
+                sin -= x.pow(numb) / factorial(numb)
+                println("Отняли ${x.pow(numb) / factorial(numb)}")
+                println("Sin = $sin")
+                calc = true
+            }
+        }
+    }
+    return sin
+}
 
 /**
  * Средняя
@@ -256,7 +282,18 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var fNumb = n
+    var sNumb = 0
+    var tNumb: Int
+    while (fNumb > 0) {
+        tNumb = fNumb % 10
+        fNumb /= 10
+        sNumb *= 10
+        sNumb += tNumb
+    }
+    return sNumb
+}
 
 /**
  * Средняя
@@ -267,7 +304,20 @@ fun revert(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean {
+    var numb = n
+    var revers = 0
+    var rem: Int
+    while (numb != 0) {
+        rem = numb % 10
+        revers = revers * 10 + rem
+        numb /= 10
+    }
+    if (n == revers) {
+        return true
+    }
+    return false
+}
 
 /**
  * Средняя
@@ -277,7 +327,17 @@ fun isPalindrome(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    val rem = n % 10
+    var divisor = 100
+
+    while (n > 10) {
+        if ((n % divisor) / (divisor / 10) == rem && n / divisor != 0) {
+            divisor *= 10
+        } else return (n % divisor) / (divisor / 10) != rem
+    }
+    return false
+}
 
 /**
  * Сложная
