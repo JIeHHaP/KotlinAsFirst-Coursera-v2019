@@ -3,7 +3,6 @@
 package lesson3.task1
 
 import kotlin.math.abs
-import kotlin.math.pow
 import kotlin.math.sqrt
 
 /**
@@ -236,33 +235,7 @@ fun collatzSteps(x: Int): Int {
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-fun sin(x: Double, eps: Double): Double {
-    var numb = 1
-    var sin = x
-    var calc = false
-
-    while (abs(sin) > abs(eps)) {
-        numb += 2
-        when {
-            abs(sin) < abs(eps) -> {
-                return sin
-            }
-            calc -> {
-                sin += x.pow(numb) / factorial(numb)
-                println("Прибавили ${x.pow(numb) / factorial(numb)}")
-                println("Sin = $sin")
-                calc = false
-            }
-            else -> {
-                sin -= x.pow(numb) / factorial(numb)
-                println("Отняли ${x.pow(numb) / factorial(numb)}")
-                println("Sin = $sin")
-                calc = true
-            }
-        }
-    }
-    return sin
-}
+fun sin(x: Double, eps: Double): Double = TODO()
 
 /**
  * Средняя
@@ -348,7 +321,34 @@ fun hasDifferentDigits(n: Int): Boolean {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var numbToPow = 0 // чило возводимое в квадрат
+    var quantityInPow = 0 // для подсчета количества цифр в квадрате
+    var scan = 0 // поиск нужной цифры
+    var divisor = 0 // делитель для проверки количества символов в квадрате
+    var pow = 0 // возведение в квадрат
+    var result = 0 // результат, цифра последовательности под номером k
+
+    while (scan < n) { // значение сканера меньше заданного числа
+        numbToPow += 1 // увеличиваем число возводимое в квадрат
+        pow = numbToPow * numbToPow //возводим в квадрат
+        quantityInPow = 1 // задаем количество цифр в квадрате
+        divisor = 10    // задаем значение делителя
+        while (pow / divisor != 0) { // все цифры квадрата учтены?
+            divisor *= 10 //увеличиваем делитель
+            quantityInPow += 1 // увеличиваем количество цифр в квадрате
+        }
+        scan += quantityInPow // прибавляем количество цифр в квадрате к сканеру
+    }
+    scan -= quantityInPow //отнимаем количество цифр в квадрате от сканеру
+    divisor /= 10 // уменьшаем делитель
+    while (scan != n) { //сканер не равен заданному числу
+        result = pow / divisor % 10 // результат равен остатку от деления выражения (квадрат числа / делитель)
+        divisor /= 10 // уменьшение делителя
+        scan += 1 // увеличиваем значение сканера
+    }
+    return result // возвращаем результат
+}
 
 /**
  * Сложная
@@ -359,4 +359,33 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var numbFib1 = 0
+    var numbFib2 = 1
+    var quantityInFib = 0
+    var scan = 0
+    var divisor = 0
+    var result = 1
+
+    while (scan < n) {
+        val fibSum = numbFib1 + numbFib2
+        numbFib1 = numbFib2
+        numbFib2 = fibSum
+        quantityInFib = 1
+        divisor = 10
+        while (numbFib1 / divisor != 0) {
+            divisor *= 10
+            quantityInFib += 1
+        }
+        scan += quantityInFib
+    }
+    scan -= quantityInFib
+    divisor /= 10
+    while (scan != n) {
+        result = numbFib1 / divisor % 10
+        divisor /= 10
+        scan += 1
+    }
+    return result
+}
+
