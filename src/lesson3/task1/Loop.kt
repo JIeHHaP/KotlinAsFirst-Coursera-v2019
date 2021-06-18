@@ -360,32 +360,85 @@ fun squareSequenceDigit(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int {
-    var numbFib1 = 0
-    var numbFib2 = 1
-    var quantityInFib = 0
-    var scan = 0
-    var divisor = 0
-    var result = 1
 
-    while (scan < n) {
-        val fibSum = numbFib1 + numbFib2
-        numbFib1 = numbFib2
-        numbFib2 = fibSum
-        quantityInFib = 1
-        divisor = 10
-        while (numbFib1 / divisor != 0) {
-            divisor *= 10
-            quantityInFib += 1
+    fun lenOfInt(n: Int): Int {
+        var number = n
+        var res = 1
+        while (number >= 10) {
+            res++
+            number /= 10
         }
-        scan += quantityInFib
+        return res
     }
-    scan -= quantityInFib
-    divisor /= 10
-    while (scan != n) {
-        result = numbFib1 / divisor % 10
-        divisor /= 10
-        scan += 1
+
+    fun digFromInt(n: Int, k: Int): Int {
+        var i = 0
+        var numbK = k
+        var numbN = n
+        if (numbK <= 0 || numbK > lenOfInt(numbN)) {
+            println("Error")
+        } else {
+            numbK = lenOfInt(numbN) - numbK + 1
+            while (numbK > 1) {
+                numbN /= 10
+                numbK--
+            }
+            i = numbN % 10
+            return i
+        }
+        return i
     }
-    return result
+
+    var curLen = 2
+    var iPrev = 1
+    var iCur = 1
+    var iTemp = iPrev + iCur
+
+    if (n <= 0) {
+        println("Введено некорректное число")
+    } else {
+        if (n < 3) {
+            println("Число меньше 3")
+            return 1
+        } else {
+            while (curLen + lenOfInt(iTemp) < n) {
+                curLen += lenOfInt(iTemp)
+                iPrev = iCur
+                iCur = iTemp
+                iTemp = iPrev + iCur
+            }
+        }
+    }
+    return digFromInt(iTemp, n - curLen)
 }
 
+/*
+var numbFib1 = 0
+var numbFib2 = 1
+var quantityInFib = 0
+var scan = 0
+var divisor = 0
+var result = 1
+
+while (scan < n) {
+    val fibSum = numbFib1 + numbFib2
+    numbFib1 = numbFib2
+    numbFib2 = fibSum
+    quantityInFib = 1
+    divisor = 10
+    while (numbFib1 / divisor != 0) {
+        divisor *= 10
+        quantityInFib += 1
+    }
+    scan += quantityInFib
+}
+scan -= quantityInFib
+divisor /= 10
+while (scan != n) {
+    result = numbFib1 / divisor % 10
+    divisor /= 10
+    scan += 1
+}
+return result
+
+ */
