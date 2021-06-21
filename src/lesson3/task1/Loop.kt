@@ -321,7 +321,66 @@ fun hasDifferentDigits(n: Int): Boolean {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
+fun lenOfInt(n: Int): Int {
+    println("Запуск 1й функц")
+    var number = n
+    var res = 1
+    while (number >= 10) {
+        res++
+        number /= 10
+    }
+    return res
+}
+
+fun digFromInt(n: Int, k: Int): Int {
+    println("Запуск 2й функции")
+    var i = 0
+    var numbK = k
+    var numbN = n
+    if (numbK <= 0 || numbK > lenOfInt(numbN)) {
+        println("Error")
+    } else {
+        numbK = lenOfInt(numbN) - numbK + 1
+        while (numbK > 1) {
+            numbN /= 10
+            numbK--
+        }
+        i = numbN % 10
+        println("ретёрт I - $i")
+        return i
+
+    }
+    return i
+
+}
+
 fun squareSequenceDigit(n: Int): Int {
+//    println("старт основной функции")
+//    var curLen = 1
+//    var powNumb = 1
+//    var iTemp = powNumb * powNumb
+//
+//    println("Заданное число: $n")
+//    if (n <= 0) {
+//        println("Введено некорректное число")
+//    } else {
+//        if (n < 2) {
+//            println("меньше 2")
+//            return 1
+//        } else {
+//            while (curLen + lenOfInt(iTemp) < n) {
+//                println("запуск цикла squareSequenceDigit")
+//                curLen += lenOfInt(iTemp)
+//                powNumb++
+//                println(powNumb)
+//                iTemp = powNumb * powNumb
+//                println("iTemp - $iTemp")
+//            }
+//        }
+//    }
+//    println("Ответ: ${digFromInt(iTemp, n - curLen)}")
+//    return digFromInt(iTemp, n - curLen)
+//}
     var numbToPow = 0 // чило возводимое в квадрат
     var quantityInPow = 0 // для подсчета количества цифр в квадрате
     var scan = 0 // поиск нужной цифры
@@ -334,13 +393,13 @@ fun squareSequenceDigit(n: Int): Int {
         pow = numbToPow * numbToPow //возводим в квадрат
         quantityInPow = 1 // задаем количество цифр в квадрате
         divisor = 10    // задаем значение делителя
-        while (pow / divisor != 0) { // все цифры квадрата учтены?
-            divisor *= 10 //увеличиваем делитель
+        while (pow >= 10) { // все цифры квадрата учтены?
             quantityInPow += 1 // увеличиваем количество цифр в квадрате
+            pow /= 10
         }
         scan += quantityInPow // прибавляем количество цифр в квадрате к сканеру
     }
-    scan -= quantityInPow //отнимаем количество цифр в квадрате от сканеру
+    scan -= quantityInPow //отнимаем количество цифр в квадрате от сканера
     divisor /= 10 // уменьшаем делитель
     while (scan != n) { //сканер не равен заданному числу
         result = pow / divisor % 10 // результат равен остатку от деления выражения (квадрат числа / делитель)
@@ -361,25 +420,25 @@ fun squareSequenceDigit(n: Int): Int {
  */
 fun fibSequenceDigit(n: Int): Int {
 
-    fun lenOfInt(n: Int): Int {
-        var number = n
-        var res = 1
-        while (number >= 10) {
-            res++
-            number /= 10
+    fun lenOfInt(n: Int): Int { //узнать длину числа
+        var number = n // полученное число Фибоначчи
+        var res = 1 // длина числа
+        while (number >= 10) { //если число больше 10
+            res++   // увеличить длину на 1
+            number /= 10 // разделить число Фибоначи на 10
         }
-        return res
+        return res // возвращаем количество чифр в числе Фибоначчи
     }
 
-    fun digFromInt(n: Int, k: Int): Int {
-        var i = 0
-        var numbK = k
-        var numbN = n
-        if (numbK <= 0 || numbK > lenOfInt(numbN)) {
+    fun digFromInt(n: Int, k: Int): Int { // n- число Фибоначчи, k - заданное число - текущая длинна
+        var i = 0  // ответ на задание
+        var numbK = k // k - заданное число - текущая длинна
+        var numbN = n // n- число Фибоначчи
+        if (numbK <= 0 || numbK > lenOfInt(numbN)) { //проверка на неверные данные
             println("Error")
         } else {
-            numbK = lenOfInt(numbN) - numbK + 1
-            while (numbK > 1) {
+            numbK = lenOfInt(numbN) - numbK + 1 //длина числа - k +1
+            while (numbK > 1) { //длина числа > 1
                 numbN /= 10
                 numbK--
             }
@@ -398,7 +457,6 @@ fun fibSequenceDigit(n: Int): Int {
         println("Введено некорректное число")
     } else {
         if (n < 3) {
-            println("Число меньше 3")
             return 1
         } else {
             while (curLen + lenOfInt(iTemp) < n) {

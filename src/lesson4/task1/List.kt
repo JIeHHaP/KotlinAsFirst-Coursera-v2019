@@ -232,7 +232,21 @@ fun factorize(n: Int): List<Int> {
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String = TODO()
+fun factorizeToString(n: Int): String {
+    var multy = 2
+    var numb = n
+    var str = ""
+    while (numb != 1) {
+        if (numb % multy == 0) {
+            numb /= multy
+            str += "$multy*"
+        } else {
+            multy++
+        }
+    }
+
+    return str.dropLast(1)
+}
 
 /**
  * Средняя
@@ -241,7 +255,18 @@ fun factorizeToString(n: Int): String = TODO()
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    val list: MutableList<Int> = mutableListOf()
+    var new: Int
+    var numb = n
+    while (numb > 0) {
+        new = numb % base
+        list += mutableListOf(new)
+        numb /= base
+    }
+    println(list)
+    return list.toList()
+}
 
 /**
  * Сложная
