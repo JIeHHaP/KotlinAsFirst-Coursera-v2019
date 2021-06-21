@@ -3,6 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 /**
@@ -141,7 +142,18 @@ fun center(list: MutableList<Double>): MutableList<Double> = TODO()
  * представленные в виде списков a и b. Скалярное произведение считать по формуле:
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.
  */
-fun times(a: List<Int>, b: List<Int>): Int = TODO()
+fun times(a: List<Int>, b: List<Int>): Int {
+    return if (a.isEmpty() || b.isEmpty())
+        0
+    else {
+        var res = 0
+        for (i in a.indices) {
+            val sum = a[i] * b[i]
+            res += sum
+        }
+        res
+    }
+}
 
 /**
  * Средняя
@@ -151,7 +163,22 @@ fun times(a: List<Int>, b: List<Int>): Int = TODO()
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0 при любом x.
  */
-fun polynom(p: List<Int>, x: Int): Int = TODO()
+fun polynom(p: List<Int>, x: Int): Int {
+    return when {
+        p.isEmpty() -> 0
+        p.size == 1 -> p[0]
+        else -> {
+            var res = p[0]
+            for (i in 1 until p.size) {
+                res += p[i] * x.toDouble().pow(i).toInt()
+
+            }
+            res
+        }
+
+    }
+}
+
 
 /**
  * Средняя
@@ -163,7 +190,18 @@ fun polynom(p: List<Int>, x: Int): Int = TODO()
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun accumulate(list: MutableList<Int>): MutableList<Int> = TODO()
+fun accumulate(list: MutableList<Int>): MutableList<Int> {
+    return when {
+        list.isEmpty() -> list
+        list.size == 1 -> list
+        else -> {
+            for (i in 1 until list.size) {
+                list[i] = list[i] + list[i - 1]
+            }
+            list
+        }
+    }
+}
 
 /**
  * Средняя
@@ -172,7 +210,20 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> = TODO()
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
-fun factorize(n: Int): List<Int> = TODO()
+fun factorize(n: Int): List<Int> {
+    val list: MutableList<Int> = mutableListOf()
+    var multy = 2
+    var numb = n
+    while (numb != 1) {
+        if (numb % multy == 0) {
+            numb /= multy
+            list.add(multy)
+        } else {
+            multy++
+        }
+    }
+    return list
+}
 
 /**
  * Сложная
