@@ -264,7 +264,7 @@ fun convert(n: Int, base: Int): List<Int> {
         list += mutableListOf(new)
         numb /= base
     }
-    println(list)
+    list.reverse()
     return list.toList()
 }
 
@@ -279,7 +279,58 @@ fun convert(n: Int, base: Int): List<Int> {
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String {
+    val map: Map<Int, String> = mapOf(
+        0 to "0",
+        1 to "1",
+        2 to "2",
+        3 to "3",
+        4 to "4",
+        5 to "5",
+        6 to "6",
+        7 to "7",
+        8 to "8",
+        9 to "9",
+        10 to "a",
+        11 to "b",
+        12 to "c",
+        13 to "d",
+        14 to "e",
+        15 to "f",
+        16 to "g",
+        17 to "h",
+        18 to "i",
+        19 to "j",
+        20 to "k",
+        21 to "l",
+        22 to "m",
+        23 to "n",
+        24 to "o",
+        25 to "p",
+        26 to "q",
+        27 to "r",
+        28 to "s",
+        29 to "t",
+        30 to "u",
+        31 to "v",
+        32 to "w",
+        33 to "x",
+        34 to "y",
+        35 to "z",
+    )
+    var str = ""
+    var new: Int
+    var numbStr: String
+    var numb = n
+    while (numb > 0) {
+        new = numb % base
+        numbStr = map[new].toString()
+        str += numbStr
+        numb /= base
+    }
+
+    return str.reversed()
+}
 
 /**
  * Средняя
@@ -288,7 +339,16 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int {
+    var sum = 0
+    var multy = digits.size - 1
+    for (i in digits.indices) {
+        val dig = digits[i] * base.toDouble().pow(multy).toInt()
+        multy--
+        sum += dig
+    }
+    return sum
+}
 
 /**
  * Сложная
@@ -302,7 +362,55 @@ fun decimal(digits: List<Int>, base: Int): Int = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, str.toInt(base)), запрещается.
  */
-fun decimalFromString(str: String, base: Int): Int = TODO()
+fun decimalFromString(str: String, base: Int): Int {
+    val map: Map<Char, Int> = mapOf(
+        '0' to 0,
+        '1' to 1,
+        '2' to 2,
+        '3' to 3,
+        '4' to 4,
+        '5' to 5,
+        '6' to 6,
+        '7' to 7,
+        '8' to 8,
+        '9' to 9,
+        'a' to 10,
+        'b' to 11,
+        'c' to 12,
+        'd' to 13,
+        'e' to 14,
+        'f' to 15,
+        'g' to 16,
+        'h' to 17,
+        'i' to 18,
+        'j' to 19,
+        'k' to 20,
+        'l' to 21,
+        'm' to 22,
+        'n' to 23,
+        'o' to 24,
+        'p' to 25,
+        'q' to 26,
+        'r' to 27,
+        's' to 28,
+        't' to 29,
+        'u' to 30,
+        'v' to 31,
+        'w' to 32,
+        'x' to 33,
+        'y' to 34,
+        'z' to 35,
+    )
+    var sum = 0
+    var multy = str.length - 1
+    for (i in str.indices) {
+        val strV = str[i]
+        val dig = map.getValue(strV) * base.toDouble().pow(multy).toInt()
+        multy--
+        sum += dig
+    }
+    return sum
+}
 
 /**
  * Сложная
@@ -321,4 +429,45 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    var veryBigMap = mapOf(
+        1 to "один",
+        2 to "два",
+        3 to "три",
+        4 to "четыре",
+        5 to "пять",
+        6 to "шесть",
+        7 to "семь",
+        8 to "восемь",
+        9 to "девять",
+        10 to "десять",
+        11 to "одиннадцать",
+        12 to "двенадцать",
+        13 to "тринадцать",
+        14 to "четырнадцать",
+        15 to "пятнадцать",
+        16 to "шестнадцать",
+        17 to "семнадцать",
+        18 to "восемнадцать",
+        19 to "девятнадцать",
+        20 to "двадцать",
+        30 to "двадцать",
+        40 to "двадцать",
+        50 to "двадцать",
+        60 to "двадцать",
+        70 to "двадцать",
+        80 to "двадцать",
+        90 to "двадцать",
+        100 to "двадцать",
+        200 to "двадцать",
+        300 to "двадцать",
+        400 to "двадцать",
+        500 to "двадцать",
+        600 to "двадцать",
+        700 to "двадцать",
+        800 to "двадцать",
+        900 to "двадцать",
+
+        )
+    return ""
+}
