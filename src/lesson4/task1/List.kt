@@ -3,8 +3,12 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import java.lang.String.join
+import java.util.*
+import java.util.Collections.nCopies
 import kotlin.math.pow
 import kotlin.math.sqrt
+
 
 /**
  * Пример
@@ -420,7 +424,26 @@ fun decimalFromString(str: String, base: Int): Int {
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+
+
+fun roman(n: Int): String {
+    val list = MutableList(n) { "I" }
+
+    return list.joinToString(separator = "")
+        .replace("IIIII", "V")
+        .replace("IIII", "IV")
+        .replace("VV", "X")
+        .replace("VIV", "IX")
+        .replace("XXXXX", "L")
+        .replace("XXXX", "XL")
+        .replace("LL", "C")
+        .replace("LXL", "XC")
+        .replace("CCCCC", "D")
+        .replace("CCCC", "CD")
+        .replace("DD", "M")
+        .replace("DCD", "CM")
+}
+
 
 /**
  * Очень сложная
