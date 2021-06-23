@@ -261,10 +261,14 @@ fun convert(n: Int, base: Int): List<Int> { // проверил
     val list: MutableList<Int> = mutableListOf()
     var new: Int
     var numb = n
-    while (numb > 0) {
-        new = numb % base
-        list += mutableListOf(new)
-        numb /= base
+    if (numb == 0)
+        list += mutableListOf(0)
+    else {
+        while (numb > 0) {
+            new = numb % base
+            list += mutableListOf(new)
+            numb /= base
+        }
     }
     list.reverse()
     return list.toList()
@@ -324,11 +328,15 @@ fun convertToString(n: Int, base: Int): String { // проверил
     var new: Int
     var numbStr: String
     var numb = n
-    while (numb > 0) {
-        new = numb % base
-        numbStr = map[new].toString()
-        str += numbStr
-        numb /= base
+    if (numb == 0)
+        str = "0"
+    else {
+        while (numb > 0) {
+            new = numb % base
+            numbStr = map[new].toString()
+            str += numbStr
+            numb /= base
+        }
     }
 
     return str.reversed()

@@ -176,7 +176,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String = TODO()
 
 /**
  * Средняя
@@ -281,21 +281,31 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
  *   ) -> emptySet()
  */
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
-    var prisePerGram = mutableListOf<Int>()
+
+    val prisePerGram = mutableMapOf<String, Pair<Int, Int>>()
+
+    //создаем новую map (Название сокровища (цена за ед.веса, вес)
     for (item in treasures.keys) {
-        prisePerGram.add(treasures.getValue(item).second / treasures.getValue(item).first)
+        val ppg = treasures.getValue(item).second / treasures.getValue(item).first
+        prisePerGram[item] = Pair(ppg, treasures.getValue(item).first)
     }
-    println(prisePerGram.sortedDescending())
-    println(treasures.keys)
+    //сортируем карту от большей цены за ед.веса к меньшей
+    val sortPPG = prisePerGram.toList().sortedByDescending { it.second.first }.toMap()
+    println(sortPPG)
+    var sum = 0 // сумма весов
+    val set = mutableSetOf<String>() //результат
+    for (i in sortPPG.keys) {
 
-//    for (i in prisePerGram.values) {
-//        var sum = 0
-//        if (i < capacity && sum < capacity) {
-//            sum += i
-//            if (sum > capacity)
-//                sum -= i
-//        }
-//    }
+        val b = sortPPG.getValue(i).second //вес текущего скровища
+        if (b <= capacity && sum < capacity) { //не привышает ли вес общую вместимость, сумма весов меньше вместимости
+            sum += b //добавляем вес к общей сумме
+            set += i //добавляем сокровище в множество
+            if (sum > capacity) { //если привышен лимит
+                sum -= b          //удалить последнее добавленное
+                set -= i
+            }
+        }
+    }
 
-    return setOf()
+    return set
 }
