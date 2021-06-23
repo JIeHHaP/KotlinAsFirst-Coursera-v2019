@@ -280,4 +280,22 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    var prisePerGram = mutableListOf<Int>()
+    for (item in treasures.keys) {
+        prisePerGram.add(treasures.getValue(item).second / treasures.getValue(item).first)
+    }
+    println(prisePerGram.sortedDescending())
+    println(treasures.keys)
+
+//    for (i in prisePerGram.values) {
+//        var sum = 0
+//        if (i < capacity && sum < capacity) {
+//            sum += i
+//            if (sum > capacity)
+//                sum -= i
+//        }
+//    }
+
+    return setOf()
+}

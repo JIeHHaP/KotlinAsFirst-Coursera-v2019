@@ -2,10 +2,8 @@
 
 package lesson4.task1
 
+
 import lesson1.task1.discriminant
-import java.lang.String.join
-import java.util.*
-import java.util.Collections.nCopies
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -167,7 +165,7 @@ fun times(a: List<Int>, b: List<Int>): Int {
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0 при любом x.
  */
-fun polynom(p: List<Int>, x: Int): Int {
+fun polynom(p: List<Int>, x: Int): Int { // проверил
     return when {
         p.isEmpty() -> 0
         p.size == 1 -> p[0]
@@ -214,7 +212,7 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
-fun factorize(n: Int): List<Int> {
+fun factorize(n: Int): List<Int> { //проверил
     val list: MutableList<Int> = mutableListOf()
     var multy = 2
     var numb = n
@@ -259,7 +257,7 @@ fun factorizeToString(n: Int): String {
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> {
+fun convert(n: Int, base: Int): List<Int> { // проверил
     val list: MutableList<Int> = mutableListOf()
     var new: Int
     var numb = n
@@ -283,7 +281,7 @@ fun convert(n: Int, base: Int): List<Int> {
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String {
+fun convertToString(n: Int, base: Int): String { // проверил
     val map: Map<Int, String> = mapOf(
         0 to "0",
         1 to "1",
@@ -320,7 +318,7 @@ fun convertToString(n: Int, base: Int): String {
         32 to "w",
         33 to "x",
         34 to "y",
-        35 to "z",
+        35 to "z"
     )
     var str = ""
     var new: Int
@@ -343,7 +341,7 @@ fun convertToString(n: Int, base: Int): String {
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int {
+fun decimal(digits: List<Int>, base: Int): Int { // проверил
     var sum = 0
     var multy = digits.size - 1
     for (i in digits.indices) {
@@ -366,7 +364,7 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, str.toInt(base)), запрещается.
  */
-fun decimalFromString(str: String, base: Int): Int {
+fun decimalFromString(str: String, base: Int): Int { // проверил
     val map: Map<Char, Int> = mapOf(
         '0' to 0,
         '1' to 1,
@@ -403,7 +401,7 @@ fun decimalFromString(str: String, base: Int): Int {
         'w' to 32,
         'x' to 33,
         'y' to 34,
-        'z' to 35,
+        'z' to 35
     )
     var sum = 0
     var multy = str.length - 1
@@ -426,7 +424,7 @@ fun decimalFromString(str: String, base: Int): Int {
  */
 
 
-fun roman(n: Int): String {
+fun roman(n: Int): String { // проверил
     val list = MutableList(n) { "I" }
 
     return list.joinToString(separator = "")
@@ -452,45 +450,4 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String {
-    var veryBigMap = mapOf(
-        1 to "один",
-        2 to "два",
-        3 to "три",
-        4 to "четыре",
-        5 to "пять",
-        6 to "шесть",
-        7 to "семь",
-        8 to "восемь",
-        9 to "девять",
-        10 to "десять",
-        11 to "одиннадцать",
-        12 to "двенадцать",
-        13 to "тринадцать",
-        14 to "четырнадцать",
-        15 to "пятнадцать",
-        16 to "шестнадцать",
-        17 to "семнадцать",
-        18 to "восемнадцать",
-        19 to "девятнадцать",
-        20 to "двадцать",
-        30 to "двадцать",
-        40 to "двадцать",
-        50 to "двадцать",
-        60 to "двадцать",
-        70 to "двадцать",
-        80 to "двадцать",
-        90 to "двадцать",
-        100 to "двадцать",
-        200 to "двадцать",
-        300 to "двадцать",
-        400 to "двадцать",
-        500 to "двадцать",
-        600 to "двадцать",
-        700 to "двадцать",
-        800 to "двадцать",
-        900 to "двадцать",
-
-        )
-    return ""
-}
+fun russian(n: Int): String = TODO()
