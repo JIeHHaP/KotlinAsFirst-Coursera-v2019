@@ -280,32 +280,66 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
  *     450
  *   ) -> emptySet()
  */
+
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
 
-    val prisePerGram = mutableMapOf<String, Pair<Int, Int>>()
+    val prisePerGram = mutableMapOf<Pair<String, Int>, Pair<Double, Int>>()
 
-    //создаем новую map (Название сокровища (цена за ед.веса, вес)
+    //создаем новую map (Название сокровища, цена сокровища) to (цена за ед.веса, вес)
     for (item in treasures.keys) {
-        val ppg = treasures.getValue(item).second / treasures.getValue(item).first
-        prisePerGram[item] = Pair(ppg, treasures.getValue(item).first)
+        val ppg = treasures.getValue(item).second / treasures.getValue(item).first.toDouble()
+        prisePerGram[Pair(item, treasures.getValue(item).second)] = Pair(ppg, treasures.getValue(item).first)
     }
+    //сортируем карту от большей цены к меньшей
+    val sortPrice = prisePerGram.toList().sortedByDescending { it.first.second }.toMap()
     //сортируем карту от большей цены за ед.веса к меньшей
     val sortPPG = prisePerGram.toList().sortedByDescending { it.second.first }.toMap()
-    println(sortPPG)
-    var sum = 0 // сумма весов
-    val set = mutableSetOf<String>() //результат
-    for (i in sortPPG.keys) {
 
-        val b = sortPPG.getValue(i).second //вес текущего скровища
-        if (b <= capacity && sum < capacity) { //не привышает ли вес общую вместимость, сумма весов меньше вместимости
-            sum += b //добавляем вес к общей сумме
-            set += i //добавляем сокровище в множество
-            if (sum > capacity) { //если привышен лимит
-                sum -= b          //удалить последнее добавленное
-                set -= i
+    var sumP = 0 // сумма стоимости по цене
+    var sumPPG = 0 // сумма стоимости по цене за грамм
+    var sumWP = 0 // сумма весов по цене
+    var sumWPPG = 0 // сумма весов по цене за грамм
+    val setPrise = mutableSetOf<String>() //результат1
+    val setPPG = mutableSetOf<String>() //результат2
+
+    for (i in sortPrice.keys) {
+
+        val weight = sortPrice.getValue(i).second //вес текущего скровища
+        val price = i.second // стоимость текущего сокровища
+
+        if (weight <= capacity && sumWP < capacity) { //не привышает ли вес общую вместимость, сумма весов меньше вместимости
+            sumWP += weight //добавляем вес к общей сумме
+            sumP += price  //добавляем цену к общей сумме
+            setPrise += i.first //добавляем название в множество
+
+            if (sumWP > capacity) { //если привышен лимит
+                sumWP -= weight          //удалить последнее добавленное
+                sumP -= price           //удалить последнее добавленное
+                setPrise -= i.first    //удалить последнее добавленное
             }
         }
     }
 
-    return set
+    for (i in sortPPG.keys) {
+
+        val weight = sortPPG.getValue(i).second //вес текущего скровища
+        val price = i.second //стоимость текущего сокровища
+
+        if (weight <= capacity && sumWPPG < capacity) { //не привышает ли вес общую вместимость, сумма весов меньше вместимости
+            sumWPPG += weight //добавляем вес к общей сумме
+            sumPPG += price  //добавляем цену к общей сумме
+            setPPG += i.first //добавляем название в множество
+
+            if (sumWPPG > capacity) { //если привышен лимит
+                sumWPPG -= weight          //удалить последнее добавленное
+                sumPPG -= price           //удалить последнее добавленное
+                setPPG -= i.first        //удалить последнее добавленное
+            }
+        }
+    }
+    return if (sumP >= sumPPG) { //сумма какой сортировки больше
+        setPrise
+    } else {
+        setPPG
+    }
 }
