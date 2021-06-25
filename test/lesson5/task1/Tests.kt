@@ -314,301 +314,43 @@ class Tests {
     @Test
     @Tag("Impossible")
     fun bagPacking() {
+//        assertEquals(
+//            setOf("Кубок"),
+//            bagPacking(
+//                mapOf("Кубок" to (500 to 2000), "Слиток" to (1000 to 5000)),
+//                850
+//            )
+//        )
+//        assertEquals(
+//            emptySet<String>(),
+//            bagPacking(
+//                mapOf("Кубок" to (500 to 2000), "Слиток" to (1000 to 5000)),
+//                450
+//            )
+//        )
         assertEquals(
-            setOf("Кубок"),
-            bagPacking(
-                mapOf("Кубок" to (500 to 2000), "Слиток" to (1000 to 5000)),
-                850
-            )
-        )
-        assertEquals(
-            emptySet<String>(),
-            bagPacking(
-                mapOf("Кубок" to (500 to 2000), "Слиток" to (1000 to 5000)),
-                450
-            )
-        )
-        assertEquals(
-            setOf("11"),
-            bagPacking(
-                mapOf(
-                    "0" to (1 to 1),
-                    "1" to (1 to 1),
-                    "2" to (1 to 1),
-                    "3" to (2 to 1),
-                    "4" to (1 to 1),
-                    "5" to (1 to 1),
-                    "6" to (1 to 1),
-                    "7" to (1 to 1),
-                    "8" to (1 to 378),
-                    "9" to (1 to 1),
-                    "10" to (1 to 1),
-                    "11" to (2 to 489)
-                ),
-                2
-            )
-        )
-        assertEquals(
-            setOf("11"),
+            setOf("14", "13", "12", "11", "10", "9", "8", "7", "6", "4", "3", "2", "1", "0"),
             bagPacking(
                 mapOf(
                     "0" to (1 to 1),
                     "1" to (1 to 1),
                     "2" to (1 to 1),
-                    "3" to (2 to 1),
+                    "3" to (1 to 1),
                     "4" to (1 to 1),
-                    "5" to (1 to 1),
+                    "5" to (481 to 302),
                     "6" to (1 to 1),
                     "7" to (1 to 1),
-                    "8" to (1 to 378),
+                    "8" to (1 to 1),
                     "9" to (1 to 1),
-                    "10" to (1 to 1),
-                    "11" to (2 to 489)
+                    "10" to (466 to 229),
+                    "11" to (1 to 1),
+                    "12" to (325 to 217),
+                    "13" to (325 to 226),
+                    "14" to (171 to 98)
                 ),
-                2
+                1297
             )
         )
-        assertEquals(
-            setOf("11"),
-            bagPacking(
-                mapOf(
-                    "0" to (1 to 1),
-                    "1" to (1 to 1),
-                    "2" to (1 to 1),
-                    "3" to (2 to 1),
-                    "4" to (1 to 1),
-                    "5" to (1 to 1),
-                    "6" to (1 to 1),
-                    "7" to (1 to 1),
-                    "8" to (1 to 378),
-                    "9" to (1 to 1),
-                    "10" to (1 to 1),
-                    "11" to (2 to 489)
-                ),
-                2
-            )
-        )
-        assertEquals(
-            setOf("11"),
-            bagPacking(
-                mapOf(
-                    "0" to (1 to 1),
-                    "1" to (1 to 1),
-                    "2" to (1 to 1),
-                    "3" to (2 to 1),
-                    "4" to (1 to 1),
-                    "5" to (1 to 1),
-                    "6" to (1 to 1),
-                    "7" to (1 to 1),
-                    "8" to (1 to 378),
-                    "9" to (1 to 1),
-                    "10" to (1 to 1),
-                    "11" to (2 to 489)
-                ),
-                2
-            )
-        )
-        assertEquals(
-            setOf("11"),
-            bagPacking(
-                mapOf(
-                    "0" to (1 to 1),
-                    "1" to (1 to 1),
-                    "2" to (1 to 1),
-                    "3" to (2 to 1),
-                    "4" to (1 to 1),
-                    "5" to (1 to 1),
-                    "6" to (1 to 1),
-                    "7" to (1 to 1),
-                    "8" to (1 to 378),
-                    "9" to (1 to 1),
-                    "10" to (1 to 1),
-                    "11" to (2 to 489)
-                ),
-                2
-            )
-        )
-        assertEquals(
-            setOf("11"),
-            bagPacking(
-                mapOf(
-                    "0" to (1 to 1),
-                    "1" to (1 to 1),
-                    "2" to (1 to 1),
-                    "3" to (2 to 1),
-                    "4" to (1 to 1),
-                    "5" to (1 to 1),
-                    "6" to (1 to 1),
-                    "7" to (1 to 1),
-                    "8" to (1 to 378),
-                    "9" to (1 to 1),
-                    "10" to (1 to 1),
-                    "11" to (2 to 489)
-                ),
-                2
-            )
-        )
-        assertEquals(
-            setOf("11"),
-            bagPacking(
-                mapOf(
-                    "0" to (1 to 1),
-                    "1" to (1 to 1),
-                    "2" to (1 to 1),
-                    "3" to (2 to 1),
-                    "4" to (1 to 1),
-                    "5" to (1 to 1),
-                    "6" to (1 to 1),
-                    "7" to (1 to 1),
-                    "8" to (1 to 378),
-                    "9" to (1 to 1),
-                    "10" to (1 to 1),
-                    "11" to (2 to 489)
-                ),
-                2
-            )
-        )
-        assertEquals(
-            setOf("11"),
-            bagPacking(
-                mapOf(
-                    "0" to (1 to 1),
-                    "1" to (1 to 1),
-                    "2" to (1 to 1),
-                    "3" to (2 to 1),
-                    "4" to (1 to 1),
-                    "5" to (1 to 1),
-                    "6" to (1 to 1),
-                    "7" to (1 to 1),
-                    "8" to (1 to 378),
-                    "9" to (1 to 1),
-                    "10" to (1 to 1),
-                    "11" to (2 to 489)
-                ),
-                2
-            )
-        )
-        assertEquals(
-            setOf("11"),
-            bagPacking(
-                mapOf(
-                    "0" to (1 to 1),
-                    "1" to (1 to 1),
-                    "2" to (1 to 1),
-                    "3" to (2 to 1),
-                    "4" to (1 to 1),
-                    "5" to (1 to 1),
-                    "6" to (1 to 1),
-                    "7" to (1 to 1),
-                    "8" to (1 to 378),
-                    "9" to (1 to 1),
-                    "10" to (1 to 1),
-                    "11" to (2 to 489)
-                ),
-                2
-            )
-        )
-        assertEquals(
-            setOf("11"),
-            bagPacking(
-                mapOf(
-                    "0" to (1 to 1),
-                    "1" to (1 to 1),
-                    "2" to (1 to 1),
-                    "3" to (2 to 1),
-                    "4" to (1 to 1),
-                    "5" to (1 to 1),
-                    "6" to (1 to 1),
-                    "7" to (1 to 1),
-                    "8" to (1 to 378),
-                    "9" to (1 to 1),
-                    "10" to (1 to 1),
-                    "11" to (2 to 489)
-                ),
-                2
-            )
-        )
-        assertEquals(
-            setOf("11"),
-            bagPacking(
-                mapOf(
-                    "0" to (1 to 1),
-                    "1" to (1 to 1),
-                    "2" to (1 to 1),
-                    "3" to (2 to 1),
-                    "4" to (1 to 1),
-                    "5" to (1 to 1),
-                    "6" to (1 to 1),
-                    "7" to (1 to 1),
-                    "8" to (1 to 378),
-                    "9" to (1 to 1),
-                    "10" to (1 to 1),
-                    "11" to (2 to 489)
-                ),
-                2
-            )
-        )
-        assertEquals(
-            setOf("11"),
-            bagPacking(
-                mapOf(
-                    "0" to (1 to 1),
-                    "1" to (1 to 1),
-                    "2" to (1 to 1),
-                    "3" to (2 to 1),
-                    "4" to (1 to 1),
-                    "5" to (1 to 1),
-                    "6" to (1 to 1),
-                    "7" to (1 to 1),
-                    "8" to (1 to 378),
-                    "9" to (1 to 1),
-                    "10" to (1 to 1),
-                    "11" to (2 to 489)
-                ),
-                2
-            )
-        )
-        assertEquals(
-            setOf("11"),
-            bagPacking(
-                mapOf(
-                    "0" to (1 to 1),
-                    "1" to (1 to 1),
-                    "2" to (1 to 1),
-                    "3" to (2 to 1),
-                    "4" to (1 to 1),
-                    "5" to (1 to 1),
-                    "6" to (1 to 1),
-                    "7" to (1 to 1),
-                    "8" to (1 to 378),
-                    "9" to (1 to 1),
-                    "10" to (1 to 1),
-                    "11" to (2 to 489)
-                ),
-                2
-            )
-        )
-        assertEquals(
-            setOf("11"),
-            bagPacking(
-                mapOf(
-                    "0" to (1 to 1),
-                    "1" to (1 to 1),
-                    "2" to (1 to 1),
-                    "3" to (2 to 1),
-                    "4" to (1 to 1),
-                    "5" to (1 to 1),
-                    "6" to (1 to 1),
-                    "7" to (1 to 1),
-                    "8" to (1 to 378),
-                    "9" to (1 to 1),
-                    "10" to (1 to 1),
-                    "11" to (2 to 489)
-                ),
-                2
-            )
-        )
-
     }
 
     // TODO: map task tests
