@@ -458,4 +458,148 @@ fun roman(n: Int): String { // проверил
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+
+
+fun russian(n: Int): String {
+
+    val intRu = mapOf( //ассоциативный массив значений
+        1 to "один ",
+        2 to "два ",
+        3 to "три ",
+        4 to "четыре ",
+        5 to "пять ",
+        6 to "шесть ",
+        7 to "семь ",
+        8 to "восемь ",
+        9 to "девять ",
+        10 to "десять ",
+        11 to "одиннадцать ",
+        12 to "двенадцать ",
+        13 to "тринадцать ",
+        14 to "четырнадцать ",
+        15 to "пятнадцать ",
+        16 to "шестнадцать ",
+        17 to "семнадцать ",
+        18 to "восемнадцать ",
+        19 to "девятнадцать ",
+        20 to "двадцать ",
+        30 to "тридцать ",
+        40 to "сорок ",
+        50 to "пятьдесят ",
+        60 to "шестьдесят ",
+        70 to "семьдесят ",
+        80 to "восемьдесят ",
+        90 to "девяносто ",
+        100 to "сто ",
+        200 to "двести ",
+        300 to "триста ",
+        400 to "четыреста ",
+        500 to "пятьсот ",
+        600 to "шестьсот ",
+        700 to "семьсот ",
+        800 to "восемьсот ",
+        900 to "девятьсот "
+    )
+
+    val thousandV = listOf("тысяча ", "тысяч ", "тысячи ", "одна ", "две ") //вспомогательный массив значений
+
+    fun thousandRU(n: Int): String { //преобразуем часть числа > 999
+        var result = ""
+
+        if (n / 100 != 0) {
+            result += intRu.getValue((n / 100) * 100)
+        }
+        if (n / 10 != 0) {
+            result += when {
+                n % 100 in 10..19 -> {
+                    intRu.getValue(n % 100)
+                }
+                n % 100 > 19 -> {
+                    intRu.getValue(((n % 100) / 10) * 10) // десятки
+                }
+                else -> {
+                    ""
+                }
+            }
+        }
+
+        result += when { // добавляем вспомогательные слова
+            n % 10 == 1 && n % 100 > 19 || n % 10 == 1 && n % 100 < 10 -> {
+                thousandV[3] + thousandV[0]
+            }
+            n % 10 in 2..4 && n % 100 > 19 || n % 10 in 2..4 && n % 100 < 10 -> {
+                when {
+                    n % 10 == 2 -> {
+                        thousandV[4] + thousandV[2]
+                    }
+                    n % 10 == 3 -> {
+                        intRu.getValue(n % 10) + thousandV[2]
+                    }
+                    n % 10 == 4 -> {
+                        intRu.getValue(n % 10) + thousandV[2]
+                    }
+                    else -> {
+                        intRu.getValue(n % 10) + thousandV[2]
+                    }
+                }
+            }
+            n % 10 > 4 && n % 100 > 19 || n % 10 > 4 && n % 100 < 10 -> {
+                intRu.getValue(n % 10) + thousandV[1]
+            }
+            else -> {
+                thousandV[1]
+            }
+        }
+        return result
+    }
+
+
+    fun hundredsRU(n: Int): String { //преобразуем часть числа < 1000
+
+        var result = ""
+
+        if (n > 0) {
+            if (n / 100 != 0) {
+                result += intRu.getValue((n / 100) * 100)
+            }
+            result += if (n / 10 != 0) {
+                if (n % 100 < 20 && n % 100 != 0) {
+                    intRu.getValue(n % 100)
+                } else {
+                    when {
+                        n % 10 != 0 -> {
+                            intRu.getValue(((n % 100) / 10) * 10) + intRu.getValue(n % 10)
+                        }
+                        n % 100 != 0 -> {
+                            intRu.getValue(((n % 100) / 10) * 10)
+                        }
+                        else -> {
+                            ""
+                        }
+                    }
+                }
+            } else {
+                intRu.getValue(n % 10)
+            }
+        }
+        return result.dropLast(1) //убираем пробел в конце у результата
+    }
+
+
+    val thousands: Int
+    val hundred: Int
+
+    if (n > 999) { //разделяем число на две части
+        thousands = n / 1000
+        hundred = n % 1000
+    } else {
+        return hundredsRU(n) // результат если число < 1000
+    }
+
+
+    return if (hundredsRU(hundred).isEmpty()) { // проверяем hundred != 0
+        thousandRU(thousands).dropLast(1) //удаляем пробел
+    } else {
+        thousandRU(thousands) + hundredsRU(hundred)
+    }
+}
