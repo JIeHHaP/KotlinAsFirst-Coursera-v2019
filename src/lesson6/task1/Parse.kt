@@ -69,7 +69,60 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    var result = ""
+    var month = mapOf(
+        "января" to "01",
+        "февраля" to "02",
+        "марта" to "03",
+        "апреля" to "04",
+        "мая" to "05",
+        "июня" to "06",
+        "июля" to "07",
+        "августа" to "08",
+        "сентября" to "09",
+        "октября" to "10",
+        "ноября" to "11",
+        "декабря" to "12"
+    )
+    val datePars = str.split(" ").toMutableList()
+
+    when {
+        datePars.size < 3 -> return ""
+        datePars[0].toInt() !in 1..31 || datePars[2].toInt() < 1 -> return ""
+        datePars[0].toInt() > 28 && !daysInMonth(datePars[2].toInt()) && datePars[1] == "февраля" -> return ""
+        datePars[0].toInt() > 29 && daysInMonth(datePars[2].toInt()) && datePars[1] == "февраля" -> return ""
+        month[datePars[1]] == null -> return ""
+    }
+    for (i in month.keys) {
+        if ((month.getValue(i).toInt() in 4..8 step 2 || month.getValue(i).toInt() == 11) && datePars[0].toInt() > 30) {
+            return ""
+        }
+    }
+
+    datePars[1] = month.getValue(datePars[1])
+    result = datePars.toString().format("%s.%s.%s")
+
+
+    return result
+}
+
+fun daysInMonth(year: Int): Boolean {
+    return when {
+        year % 400 == 0 -> {
+            true
+        }
+        year % 100 == 0 -> {
+            false
+        }
+        year % 4 == 0 -> {
+            true
+        }
+        else -> {
+            false
+        }
+    }
+}
 
 /**
  * Средняя
