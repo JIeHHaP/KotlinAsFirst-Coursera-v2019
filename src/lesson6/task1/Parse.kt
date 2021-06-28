@@ -70,8 +70,7 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String {
-    var result = ""
-    var month = mapOf(
+    val month = mapOf(
         "января" to "01",
         "февраля" to "02",
         "марта" to "03",
@@ -89,22 +88,21 @@ fun dateStrToDigit(str: String): String {
 
     when {
         datePars.size < 3 -> return ""
+        month[datePars[1]] == null -> return ""
         datePars[0].toInt() !in 1..31 || datePars[2].toInt() < 1 -> return ""
         datePars[0].toInt() > 28 && !daysInMonth(datePars[2].toInt()) && datePars[1] == "февраля" -> return ""
         datePars[0].toInt() > 29 && daysInMonth(datePars[2].toInt()) && datePars[1] == "февраля" -> return ""
-        month[datePars[1]] == null -> return ""
-    }
-    for (i in month.keys) {
-        if ((month.getValue(i).toInt() in 4..8 step 2 || month.getValue(i).toInt() == 11) && datePars[0].toInt() > 30) {
-            return ""
-        }
+        (month.getValue(datePars[1]).toInt() in 4..8 step 2 || month.getValue(datePars[1])
+            .toInt() == 11) && datePars[0].toInt() > 30 -> return ""
     }
 
     datePars[1] = month.getValue(datePars[1])
-    result = datePars.toString().format("%s.%s.%s")
 
+    val d = datePars[0].toInt()
+    val m = datePars[1].toInt()
+    val y = datePars[2].toInt()
 
-    return result
+    return String.format("%02d.%02d.%d", d, m, y)
 }
 
 fun daysInMonth(year: Int): Boolean {
@@ -134,7 +132,41 @@ fun daysInMonth(year: Int): Boolean {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val month = mapOf(
+        "01" to "января",
+        "05" to "февраля",
+        "03" to "марта",
+        "04" to "апреля",
+        "05" to "мая",
+        "06" to "июня",
+        "07" to "июля",
+        "08" to "августа",
+        "09" to "сентября",
+        "10" to "октября",
+        "11" to "ноября",
+        "12" to "декабря"
+    )
+    val datePars = digital.split(".").toMutableList()
+
+    when {
+        datePars.size < 3 -> return ""
+        month[datePars[1]] == null -> return ""
+        datePars[0].toInt() !in 1..31 || datePars[2].toInt() < 1 -> return ""
+        datePars[0].toInt() > 28 && !daysInMonth(datePars[2].toInt()) && datePars[1] == "02" -> return ""
+        datePars[0].toInt() > 29 && daysInMonth(datePars[2].toInt()) && datePars[1] == "02" -> return ""
+        (datePars[1].toInt() in 4..8 step 2 || datePars[1]
+            .toInt() == 11) && datePars[0].toInt() > 30 -> return ""
+    }
+
+    datePars[1] = month.getValue(datePars[1])
+
+    val d = datePars[0].toInt()
+    val m = datePars[1]
+    val y = datePars[2]
+
+    return String.format("%d %s %s", d, m, y)
+}
 
 /**
  * Средняя
@@ -150,7 +182,18 @@ fun dateDigitToStr(digital: String): String = TODO()
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+
+    val stop = phone.filterNot { it.isDigit() || it == '+' || it == '-' || it == '(' || it == ')' || it.isWhitespace() }
+    println(stop)
+    if (stop.isNotEmpty()) {
+        return ""
+    }
+
+    val filteredPhone = phone.filter { it.isDigit() || it == '+' }
+    println(filteredPhone)
+    return filteredPhone
+}
 
 /**
  * Средняя
