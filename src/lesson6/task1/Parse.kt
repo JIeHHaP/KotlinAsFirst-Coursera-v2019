@@ -152,7 +152,7 @@ fun dateDigitToStr(digital: String): String {
     when {
         datePars.size < 3 -> return ""
         month[datePars[1]] == null -> return ""
-        datePars[0].toInt() !in 1..31 || datePars[2].toInt() < 1 -> return ""
+        datePars[0].toInt() !in 1..31 || datePars[2].toInt() < 1000 -> return ""
         datePars[0].toInt() > 28 && !daysInMonth(datePars[2].toInt()) && datePars[1] == "02" -> return ""
         datePars[0].toInt() > 29 && daysInMonth(datePars[2].toInt()) && datePars[1] == "02" -> return ""
         (datePars[1].toInt() in 4..8 step 2 || datePars[1]
@@ -184,15 +184,18 @@ fun dateDigitToStr(digital: String): String {
  */
 fun flattenPhoneNumber(phone: String): String {
 
-    val stop = phone.filterNot { it.isDigit() || it == '+' || it == '-' || it == '(' || it == ')' || it.isWhitespace() }
-    println(stop)
-    if (stop.isNotEmpty()) {
-        return ""
+    val regStop = Regex("[^-\\d()+\\s]").find(phone)
+    val regStop2 = Regex("""\(\)""").containsMatchIn(phone)
+    val reg = Regex("(^\\+\\d+|\\d+)").findAll(phone)
+
+    val result = StringBuilder()
+    for (matchedText in reg) {
+        result.append(matchedText.value)
     }
 
-    val filteredPhone = phone.filter { it.isDigit() || it == '+' }
-    println(filteredPhone)
-    return filteredPhone
+    return if (regStop != null || regStop2) {
+        ""
+    } else result.toString()
 }
 
 /**
@@ -205,7 +208,12 @@ fun flattenPhoneNumber(phone: String): String {
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    val stop = Regex("[^\\d\\-%\\s]").find(jumps)
+    val reg = Regex("\\d+").findAll(jumps).toList()
+    println(reg)
+    return -1
+}
 
 /**
  * Сложная
