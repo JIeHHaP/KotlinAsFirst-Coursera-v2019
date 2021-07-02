@@ -89,7 +89,7 @@ fun dateStrToDigit(str: String): String {
     when {
         datePars.size < 3 -> return ""
         month[datePars[1]] == null -> return ""
-        datePars[0].toInt() !in 1..31 || datePars[2].toInt() < 1 -> return ""
+        datePars[0].toInt() !in 1..31 || datePars[2].toInt() < 1000 -> return ""
         datePars[0].toInt() > 28 && !daysInMonth(datePars[2].toInt()) && datePars[1] == "февраля" -> return ""
         datePars[0].toInt() > 29 && daysInMonth(datePars[2].toInt()) && datePars[1] == "февраля" -> return ""
         (month.getValue(datePars[1]).toInt() in 4..8 step 2 || month.getValue(datePars[1])
@@ -135,7 +135,7 @@ fun daysInMonth(year: Int): Boolean {
 fun dateDigitToStr(digital: String): String {
     val month = mapOf(
         "01" to "января",
-        "05" to "февраля",
+        "02" to "февраля",
         "03" to "марта",
         "04" to "апреля",
         "05" to "мая",
@@ -150,9 +150,9 @@ fun dateDigitToStr(digital: String): String {
     val datePars = digital.split(".").toMutableList()
 
     when {
-        datePars.size < 3 -> return ""
+        datePars.size != 3 -> return ""
         month[datePars[1]] == null -> return ""
-        datePars[0].toInt() !in 1..31 || datePars[2].toInt() < 1000 -> return ""
+        datePars[0].toInt() !in 1..31 || datePars[2].toInt() < 1 -> return ""
         datePars[0].toInt() > 28 && !daysInMonth(datePars[2].toInt()) && datePars[1] == "02" -> return ""
         datePars[0].toInt() > 29 && daysInMonth(datePars[2].toInt()) && datePars[1] == "02" -> return ""
         (datePars[1].toInt() in 4..8 step 2 || datePars[1]
@@ -209,10 +209,15 @@ fun flattenPhoneNumber(phone: String): String {
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int {
+
     val stop = Regex("[^\\d\\-%\\s]").find(jumps)
-    val reg = Regex("\\d+").findAll(jumps).toList()
-    println(reg)
-    return -1
+    val reg = Regex("(\\d+)").findAll(jumps).map { it.groupValues[0] }.toList()
+    val intList = mutableListOf<Int>()
+    for (i in reg) {
+        val numb = i.toInt()
+        intList += numb
+    }
+    return if (stop != null) -1 else intList.maxOrNull() ?: -1
 }
 
 /**
@@ -226,7 +231,21 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    val stop = Regex("[^\\d+\\s-%]").find(jumps)
+    return if (stop != null) {
+        -1
+    } else {
+        val reg = Regex("\\d+\\s[+]").findAll(jumps).map { it.groupValues[0] }.toList()
+        val successList = mutableListOf<Int>()
+        for (i in reg.indices) {
+            val success = Regex("\\d+").find(reg[i])
+            successList.add(success!!.value.toInt())
+        }
+        successList.maxOrNull() ?: -1
+    }
+
+}
 
 /**
  * Сложная
@@ -237,7 +256,10 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    val stop = Regex("[^-+\\s\\d]|\\++|-+|\\+\\d|-\\d").find(expression)
+    return 123
+}
 
 /**
  * Сложная
