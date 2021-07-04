@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import java.lang.IllegalArgumentException
+
 /**
  * Пример
  *
@@ -89,11 +91,12 @@ fun dateStrToDigit(str: String): String {
     when {
         datePars.size < 3 -> return ""
         month[datePars[1]] == null -> return ""
-        datePars[0].toInt() !in 1..31 || datePars[2].toInt() < 1000 -> return ""
+        datePars[0].toInt() !in 1..31 || datePars[2].toInt() < 0 -> return ""
         datePars[0].toInt() > 28 && !daysInMonth(datePars[2].toInt()) && datePars[1] == "февраля" -> return ""
         datePars[0].toInt() > 29 && daysInMonth(datePars[2].toInt()) && datePars[1] == "февраля" -> return ""
-        (month.getValue(datePars[1]).toInt() in 4..8 step 2 || month.getValue(datePars[1])
-            .toInt() == 11) && datePars[0].toInt() > 30 -> return ""
+        (month.getValue(datePars[1]).toInt() in 4..6 step 2 || month.getValue(datePars[1])
+            .toInt() == 11 || month.getValue(datePars[1])
+            .toInt() == 9) && datePars[0].toInt() > 30 -> return ""
     }
 
     datePars[1] = month.getValue(datePars[1])
@@ -152,11 +155,12 @@ fun dateDigitToStr(digital: String): String {
     when {
         datePars.size != 3 -> return ""
         month[datePars[1]] == null -> return ""
-        datePars[0].toInt() !in 1..31 || datePars[2].toInt() < 1 -> return ""
+        datePars[0].toInt() !in 1..31 || datePars[2].toInt() < 0 -> return ""
         datePars[0].toInt() > 28 && !daysInMonth(datePars[2].toInt()) && datePars[1] == "02" -> return ""
         datePars[0].toInt() > 29 && daysInMonth(datePars[2].toInt()) && datePars[1] == "02" -> return ""
-        (datePars[1].toInt() in 4..8 step 2 || datePars[1]
-            .toInt() == 11) && datePars[0].toInt() > 30 -> return ""
+        (datePars[1].toInt() in 4..6 step 2 || datePars[1]
+            .toInt() == 11 || datePars[1]
+            .toInt() == 9) && datePars[0].toInt() > 30 -> return ""
     }
 
     datePars[1] = month.getValue(datePars[1])
@@ -208,17 +212,17 @@ fun flattenPhoneNumber(phone: String): String {
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int {
-
-    val stop = Regex("[^\\d\\-%\\s]").find(jumps)
-    val reg = Regex("(\\d+)").findAll(jumps).map { it.groupValues[0] }.toList()
-    val intList = mutableListOf<Int>()
-    for (i in reg) {
-        val numb = i.toInt()
-        intList += numb
-    }
-    return if (stop != null) -1 else intList.maxOrNull() ?: -1
-}
+fun bestLongJump(jumps: String): Int = TODO()
+//{
+//    val stop = Regex("[^\\d\\-%\\s]").find(jumps)
+//    val reg = Regex("(\\d+)").findAll(jumps).map { it.groupValues[0] }.toList()
+//    val intList = mutableListOf<Int>()
+//    for (i in reg) {
+//        val numb = i.toInt()
+//        intList += numb
+//    }
+//    return if (stop != null) -1 else intList.maxOrNull() ?: -1
+//}
 
 /**
  * Сложная
@@ -231,21 +235,21 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int {
-    val stop = Regex("[^\\d+\\s-%]").find(jumps)
-    return if (stop != null) {
-        -1
-    } else {
-        val reg = Regex("\\d+\\s[+]").findAll(jumps).map { it.groupValues[0] }.toList()
-        val successList = mutableListOf<Int>()
-        for (i in reg.indices) {
-            val success = Regex("\\d+").find(reg[i])
-            successList.add(success!!.value.toInt())
-        }
-        successList.maxOrNull() ?: -1
-    }
-
-}
+fun bestHighJump(jumps: String): Int = TODO()
+//{
+//    val stop = Regex("[^\\d+\\s-%]").find(jumps)
+//    return if (stop != null) {
+//        -1
+//    } else {
+//        val reg = Regex("\\d+\\s[+]").findAll(jumps).map { it.groupValues[0] }.toList()
+//        val successList = mutableListOf<Int>()
+//        for (i in reg.indices) {
+//            val success = Regex("\\d+").find(reg[i])
+//            successList.add(success!!.value.toInt())
+//        }
+//        successList.maxOrNull() ?: -1
+//    }
+//}
 
 /**
  * Сложная
@@ -257,8 +261,22 @@ fun bestHighJump(jumps: String): Int {
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    val stop = Regex("[^-+\\s\\d]|\\++|-+|\\+\\d|-\\d").find(expression)
-    return 123
+    val stop = Regex("[^-+\\s\\d]|\\+\\+|-\\+|\\+\\d|-\\d").find(expression)
+    val firstInt = Regex("^\\d").find(expression)
+    val splitStr = expression.split(" ")
+    var result: Int
+    if (stop != null || firstInt == null) {
+        throw IllegalArgumentException()
+    } else {
+        result = splitStr[0].toInt()
+        for (i in splitStr.indices) {
+            when {
+                splitStr[i] == "+" -> result += splitStr[i + 1].toInt()
+                splitStr[i] == "-" -> result -= splitStr[i + 1].toInt()
+            }
+        }
+    }
+    return result
 }
 
 /**
@@ -270,7 +288,27 @@ fun plusMinus(expression: String): Int {
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val splitStr = str.toLowerCase().split(" ")
+    var result = -1
+
+    for (i in splitStr.indices) {
+        if (splitStr.size < 2) {
+            return result
+        }
+        if (i + 1 in splitStr.indices) {
+            if (splitStr[i] == splitStr[i + 1]) {
+                result += 1
+                return result
+            } else {
+                result += splitStr[i].length + 1
+            }
+        } else {
+            result = -1
+        }
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -283,7 +321,11 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше либо равны нуля.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val stop = Regex("[а-яА-ЯёЁ]+\\s\\d+").find(description)
+
+    return ""
+}
 
 /**
  * Сложная
